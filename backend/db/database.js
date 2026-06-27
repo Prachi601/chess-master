@@ -1,11 +1,12 @@
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+const mysql = require("mysql2/promise");
+require("dotenv").config();
 
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'chess_master',
+  host: process.env.DB_HOST || "localhost",
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME || "chess_master",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -14,8 +15,10 @@ const pool = mysql.createPool({
 const initDB = async () => {
   const conn = await pool.getConnection();
   try {
-    await conn.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME || 'chess_master'}\``);
-    await conn.query(`USE \`${process.env.DB_NAME || 'chess_master'}\``);
+    await conn.query(
+      `CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME || "chess_master"}\``,
+    );
+    await conn.query(`USE \`${process.env.DB_NAME || "chess_master"}\``);
 
     await conn.query(`
       CREATE TABLE IF NOT EXISTS users (
@@ -87,9 +90,9 @@ const initDB = async () => {
       )
     `);
 
-    console.log('✅ Database initialized successfully');
+    console.log("✅ Database initialized successfully");
   } catch (err) {
-    console.error('❌ Database init error:', err.message);
+    console.error("❌ Database init error:", err.message);
   } finally {
     conn.release();
   }
