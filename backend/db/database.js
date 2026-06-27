@@ -3,8 +3,8 @@ require("dotenv").config();
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST || "autorack.proxy.rlwy.net",
-  port: process.env.DB_PORT || 3306,
-  user: process.env.DB_USER || "29481",
+  port: process.env.DB_PORT || 29481,
+  user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "OwurzynhBBhwkyvfyalFxPCJNInVQLYS",
   database: process.env.DB_NAME || "railway",
   waitForConnections: true,
